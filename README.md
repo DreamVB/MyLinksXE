@@ -19,3 +19,8 @@ MyLink’s XE is a free and opensource program made in Lazarus to store all your
 ## Screen
 
 <img width="375" alt="logo" src="https://user-images.githubusercontent.com/17520035/218338822-6f13bb64-973f-4b02-bc5a-0aabb5828f92.png">
+
+## Other
+This projected uses the lazarus-main-images-general_purpose more on this icon pack can be found here
+
+https://gitlab.com/freepascal.org/lazarus/lazarus/-/tree/main/images/general_purpose
