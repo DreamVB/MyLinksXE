@@ -13,7 +13,7 @@ MyLink’s XE is a free and opensource program made in Lazarus to store all your
 -	Export bookmarks to HTML page
 -	Add, Edit, Delete and Move bookmarks.
 -	Open bookmarks in different Web browsers (See broswers.ini for details)
--	Auto complete search for categories ad bookmarks
+-	Auto complete search for categories and bookmarks
 -	Create an Internet Shortcut to any location (Note this only works with the Windows .URL format)
 
 ## Screen
