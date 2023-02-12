@@ -1,0 +1,71 @@
+object frmShareLink: TfrmShareLink
+  Left = 649
+  Height = 265
+  Top = 290
+  Width = 320
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
+  Caption = 'Share Link'
+  ClientHeight = 265
+  ClientWidth = 320
+  DesignTimePPI = 144
+  OnCreate = FormCreate
+  Position = poMainFormCenter
+  LCLVersion = '2.2.4.0'
+  object R1: TRadioButton
+    Left = 40
+    Height = 29
+    Top = 24
+    Width = 107
+    Caption = 'Facebook'
+    Checked = True
+    OnChange = R1Change
+    TabOrder = 4
+    TabStop = True
+  end
+  object R2: TRadioButton
+    Left = 40
+    Height = 29
+    Top = 64
+    Width = 83
+    Caption = 'Twitter'
+    OnChange = R2Change
+    TabOrder = 0
+  end
+  object R3: TRadioButton
+    Left = 40
+    Height = 29
+    Top = 104
+    Width = 96
+    Caption = 'LinkedIn'
+    OnChange = R3Change
+    TabOrder = 1
+  end
+  object cmdOK: TButton
+    Left = 40
+    Height = 38
+    Top = 192
+    Width = 113
+    Caption = 'OK'
+    OnClick = cmdOKClick
+    TabOrder = 2
+  end
+  object cmdClose: TButton
+    Left = 168
+    Height = 38
+    Top = 192
+    Width = 113
+    Caption = 'Close'
+    OnClick = cmdCloseClick
+    TabOrder = 3
+  end
+  object R4: TRadioButton
+    Left = 40
+    Height = 29
+    Top = 144
+    Width = 72
+    Caption = 'Email'
+    OnChange = R4Change
+    TabOrder = 5
+  end
+end

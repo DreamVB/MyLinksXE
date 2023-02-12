@@ -1,0 +1,50 @@
+object frmMoveLink: TfrmMoveLink
+  Left = 721
+  Height = 164
+  Top = 250
+  Width = 420
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
+  Caption = 'Move Link To'
+  ClientHeight = 164
+  ClientWidth = 420
+  DesignTimePPI = 144
+  OnCreate = FormCreate
+  Position = poMainFormCenter
+  LCLVersion = '2.2.4.0'
+  object lblMoveTo: TLabel
+    Left = 32
+    Height = 25
+    Top = 24
+    Width = 68
+    Caption = 'Move To'
+    ParentColor = False
+  end
+  object cboMoveTo: TComboBox
+    Left = 32
+    Height = 33
+    Top = 56
+    Width = 342
+    ItemHeight = 25
+    Style = csDropDownList
+    TabOrder = 0
+  end
+  object cmdOK: TButton
+    Left = 32
+    Height = 38
+    Top = 104
+    Width = 113
+    Caption = 'Move'
+    OnClick = cmdOKClick
+    TabOrder = 1
+  end
+  object cmdClose: TButton
+    Left = 160
+    Height = 38
+    Top = 104
+    Width = 113
+    Caption = 'Close'
+    OnClick = cmdCloseClick
+    TabOrder = 2
+  end
+end
