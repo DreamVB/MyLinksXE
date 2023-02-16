@@ -18,7 +18,7 @@ MyLink’s XE is a free and opensource program made in Lazarus to store all your
 
 ## Screen
 
-<img width="387" alt="logo" src="https://user-images.githubusercontent.com/17520035/219494826-a162c1f7-cd4a-4556-8d68-22c3d9fc2c69.png">
+<img width="398" alt="logo" src="https://user-images.githubusercontent.com/17520035/219495899-2736d81d-5f43-4fe1-a184-6d694baa37d6.png">
 
 ## Update Version XE1
 
