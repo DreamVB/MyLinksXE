@@ -18,7 +18,17 @@ MyLink’s XE is a free and opensource program made in Lazarus to store all your
 
 ## Screen
 
-<img width="375" alt="logo" src="https://user-images.githubusercontent.com/17520035/218338822-6f13bb64-973f-4b02-bc5a-0aabb5828f92.png">
+<img width="387" alt="logo" src="https://user-images.githubusercontent.com/17520035/219494826-a162c1f7-cd4a-4556-8d68-22c3d9fc2c69.png">
+
+## Update Version XE1
+
+- Fixed a few bugs and spelling errors
+- Make a few changes to the GUI
+- Added bookmark info at bottom of bookmarks
+- Updated export bookmarks to html it does them all now
+- Added export to Internet Explorer shortcuts
+- Changed the .cats format now look like an INI file
+- Up dated a few other things
 
 ## Other
 This projected uses the lazarus-main-images-general_purpose more on this icon pack can be found here
