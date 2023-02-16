@@ -1,0 +1,67 @@
+object frmAbout: TfrmAbout
+  Left = 671
+  Height = 243
+  Top = 349
+  Width = 452
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
+  Caption = 'About'
+  ClientHeight = 243
+  ClientWidth = 452
+  DesignTimePPI = 144
+  Position = poMainFormCenter
+  LCLVersion = '2.2.4.0'
+  object lblTitle: TLabel
+    Left = 40
+    Height = 48
+    Top = 24
+    Width = 267
+    Caption = 'My Links XE1'
+    Font.CharSet = ANSI_CHARSET
+    Font.Height = -40
+    Font.Name = 'Verdana'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+  end
+  object lblInfo: TLabel
+    Left = 48
+    Height = 28
+    Top = 88
+    Width = 374
+    Caption = 'Free and Opensource Bookmarks Manager.'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clGray
+    Font.Height = -20
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+  end
+  object lblDevOp: TLabel
+    Left = 48
+    Height = 18
+    Top = 136
+    Width = 288
+    Caption = 'Developed by Ben J a.k.a DreamVB'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clBlack
+    Font.Height = -16
+    Font.Name = 'Verdana'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    Font.Style = [fsItalic]
+    ParentColor = False
+    ParentFont = False
+  end
+  object cmdOK: TButton
+    Left = 160
+    Height = 38
+    Top = 176
+    Width = 113
+    Caption = 'OK'
+    OnClick = cmdOKClick
+    TabOrder = 0
+  end
+end

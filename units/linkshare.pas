@@ -5,7 +5,8 @@ unit linkshare;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Tools;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
+  Tools;
 
 type
 
@@ -14,6 +15,8 @@ type
   TfrmShareLink = class(TForm)
     cmdOK: TButton;
     cmdClose: TButton;
+    ImgShare: TImage;
+    lblServiceTitle: TLabel;
     R1: TRadioButton;
     R2: TRadioButton;
     R3: TRadioButton;

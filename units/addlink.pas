@@ -15,16 +15,16 @@ type
     cmdOK: TButton;
     cmdClose: TButton;
     ImgLogo: TImage;
+    lblDescription: TLabeledEdit;
     lblLinkTitle: TLabel;
     lblLinkName: TLabeledEdit;
     lblLinkAddress: TLabeledEdit;
     procedure cmdCloseClick(Sender: TObject);
     procedure cmdOKClick(Sender: TObject);
-    procedure lblLinkAddressKeyPress(Sender: TObject; var Key: char);
     procedure lblLinkNameChange(Sender: TObject);
     procedure lblLinkNameKeyPress(Sender: TObject; var Key: char);
   private
-
+    function VaildName(sName: string): boolean;
   public
 
   end;
@@ -38,9 +38,22 @@ implementation
 
 { TfrmAddLink }
 
-procedure TfrmAddLink.lblLinkAddressKeyPress(Sender: TObject; var Key: char);
+function TfrmAddLink.VaildName(sName: string): boolean;
+var
+  I: integer;
+  Flag: boolean;
 begin
-  if Key = '|' then Key := #0;
+  Flag := True;
+
+  for I := 1 to Length(sName) do
+  begin
+    if (sName[I]) in ['['..']'] then
+    begin
+      Flag := False;
+      Break;
+    end;
+  end;
+  Result := Flag;
 end;
 
 procedure TfrmAddLink.lblLinkNameChange(Sender: TObject);
@@ -50,7 +63,7 @@ end;
 
 procedure TfrmAddLink.lblLinkNameKeyPress(Sender: TObject; var Key: char);
 begin
-  if Key = '|' then Key := #0;
+  if Key in ['[', ']'] then Key := #0;
 end;
 
 procedure TfrmAddLink.cmdCloseClick(Sender: TObject);
@@ -61,12 +74,20 @@ end;
 
 procedure TfrmAddLink.cmdOKClick(Sender: TObject);
 begin
-  lblLinkName.Text := StringReplace(lblLinkName.Text, '|', '', [rfReplaceAll]);
-  lblLinkAddress.Text := StringReplace(lblLinkAddress.Text, '|', '', [rfReplaceAll]);
   Tools.ButtonPress := 1;
-  Tools.LinkName := lblLinkName.Text;
-  Tools.LinkUrl := lblLinkAddress.Text;
-  Close;
+
+  if not VaildName(lblLinkName.Text) then
+  begin
+    MessageDlg(Text, 'Bookmark name cannot contain the characters [ or ]',
+      mtInformation, [mbOK], 0);
+  end
+  else
+  begin
+    Tools.LinkName := lblLinkName.Text;
+    Tools.LinkUrl := lblLinkAddress.Text;
+    Tools.LinkDesc := lblDescription.Text;
+    Close;
+  end;
 end;
 
 end.

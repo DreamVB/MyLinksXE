@@ -5,7 +5,7 @@ unit linkmove;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Tools;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Tools, LazFileUtils;
 
 type
 
@@ -39,7 +39,7 @@ var
   sr: TSearchRec;
   S0: string;
 begin
-  if FindFirst(BasePath + '*.cat', faAnyFile, sr) = 0 then
+  if FindFirstUTF8(BasePath + '*.cat', faAnyFile, sr) = 0 then
   begin
     cboMoveTo.Clear;
     repeat
@@ -48,8 +48,9 @@ begin
       begin
         cboMoveTo.Items.Add(S0);
       end;
-    until FindNext(sr) <> 0;
+    until FindNextUTF8(sr) <> 0;
   end;
+
 end;
 
 procedure TfrmMoveLink.FormCreate(Sender: TObject);

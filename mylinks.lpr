@@ -5,16 +5,16 @@ program mylinks;
 uses
  {$IFDEF UNIX}
   cthreads,
-                                   {$ENDIF} {$IFDEF HASAMIGA}
+                                                           {$ENDIF} {$IFDEF HASAMIGA}
   athreads,
-                                   {$ENDIF}
+                                                           {$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms,
   main,
   Tools,
   addlink,
   linkmove,
-  linkshare { you can add units after this };
+  linkshare, about { you can add units after this };
 
 {$R *.res}
 
@@ -27,5 +27,6 @@ begin
   Application.CreateForm(TfrmAddLink, frmAddLink);
   Application.CreateForm(TfrmMoveLink, frmMoveLink);
   Application.CreateForm(TfrmShareLink, frmShareLink);
+  Application.CreateForm(TfrmAbout, frmAbout);
   Application.Run;
 end.

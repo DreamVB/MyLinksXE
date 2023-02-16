@@ -5,14 +5,13 @@ unit Tools;
 interface
 
 uses
-  Classes, SysUtils, ComCtrls, lclintf;
+  Classes, SysUtils, ComCtrls, LCLIntf, LazFileUtils;
 
 function FixPath(S: string): string;
 function RemoveExt(S: string): string;
 function VaildFileName(S: string): boolean;
 function AddCat(TheName: string): integer;
 function EditCat(OldName, NewName: string): integer;
-function OpenLink(Address: string): boolean;
 
 var
   AppPath: string;
@@ -26,6 +25,7 @@ var
   //Link vars
   LinkName: string;
   LinkUrl: string;
+  LinkDesc: string;
   //Linkshare
   LinkShareUrl: string;
   LinkShareSrc: string;
@@ -85,7 +85,7 @@ begin
   begin
     Result := 0;
   end
-  else if FileExists(BasePath + TheName + '.cat') then
+  else if FileExistsUTF8(BasePath + TheName + '.cat') then
   begin
     Result := 1;
   end
@@ -111,20 +111,15 @@ begin
   begin
     Result := 0;
   end
-  else if FileExists(lzNewFile) then
+  else if FileExistsUTF8(lzNewFile) then
   begin
     Result := 1;
   end
   else
   begin
-    RenameFile(lzOldFile, lzNewFile);
+    RenameFileUTF8(lzOldFile, lzNewFile);
     Result := 2;
   end;
-end;
-
-function OpenLink(Address: string): boolean;
-begin
-  Result := OpenDocument(Address);
 end;
 
 end.

@@ -10,7 +10,7 @@ interface
 
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, LazFileUtils;
 
 type
 
@@ -34,23 +34,6 @@ type
   end;
 
 implementation
-
-function ExtractFolder(Path: string): string;
-var
-  s_pos: integer;
-begin
-  //Used to extract the path of the file, but removes the drive letter.
-  s_pos := Pos(':\', Path);
-
-  if s_pos > 0 then
-  begin
-    Result := Copy(Path, s_pos + 2);
-  end
-  else
-  begin
-    Result := Path;
-  end;
-end;
 
 constructor TBagFile.Create;
 begin
@@ -126,7 +109,6 @@ var
   BagFile: file;
   bWrote, bRead: longint;
   lzFullFile: string;
-  lzFilePath: string;
   X: integer;
   flag: boolean;
 begin
@@ -146,7 +128,7 @@ begin
   else
   begin
     //Extract the files.
-    if not DirectoryExists(ExtractTo, True) then
+    if not DirectoryExistsUTF8(ExtractTo) then
     begin
       ForceDirectories(ExtractTo);
     end;

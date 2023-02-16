@@ -1,71 +1,118 @@
 object frmShareLink: TfrmShareLink
   Left = 649
-  Height = 265
+  Height = 291
   Top = 290
-  Width = 320
+  Width = 473
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
-  Caption = 'Share Link'
-  ClientHeight = 265
-  ClientWidth = 320
+  Caption = 'Share Bookmark'
+  ClientHeight = 291
+  ClientWidth = 473
   DesignTimePPI = 144
   OnCreate = FormCreate
   Position = poMainFormCenter
   LCLVersion = '2.2.4.0'
   object R1: TRadioButton
-    Left = 40
+    Left = 72
     Height = 29
-    Top = 24
+    Top = 64
     Width = 107
     Caption = 'Facebook'
     Checked = True
     OnChange = R1Change
-    TabOrder = 4
+    TabOrder = 0
     TabStop = True
   end
   object R2: TRadioButton
-    Left = 40
+    Left = 72
     Height = 29
-    Top = 64
+    Top = 104
     Width = 83
     Caption = 'Twitter'
     OnChange = R2Change
-    TabOrder = 0
+    TabOrder = 1
   end
   object R3: TRadioButton
-    Left = 40
+    Left = 72
     Height = 29
-    Top = 104
+    Top = 144
     Width = 96
     Caption = 'LinkedIn'
     OnChange = R3Change
-    TabOrder = 1
+    TabOrder = 2
   end
   object cmdOK: TButton
-    Left = 40
+    Left = 72
     Height = 38
-    Top = 192
+    Top = 232
     Width = 113
     Caption = 'OK'
     OnClick = cmdOKClick
-    TabOrder = 2
+    TabOrder = 4
   end
   object cmdClose: TButton
-    Left = 168
+    Left = 192
     Height = 38
-    Top = 192
-    Width = 113
+    Top = 232
+    Width = 80
     Caption = 'Close'
     OnClick = cmdCloseClick
-    TabOrder = 3
+    TabOrder = 5
   end
   object R4: TRadioButton
-    Left = 40
+    Left = 72
     Height = 29
-    Top = 144
+    Top = 184
     Width = 72
     Caption = 'Email'
     OnChange = R4Change
-    TabOrder = 5
+    TabOrder = 3
+  end
+  object lblServiceTitle: TLabel
+    Left = 72
+    Height = 25
+    Top = 24
+    Width = 378
+    Caption = 'Select the service to share your bookmark with:'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clGray
+    Font.Name = 'Segoe UI Semibold'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    Font.Style = [fsBold, fsItalic]
+    ParentColor = False
+    ParentFont = False
+  end
+  object ImgShare: TImage
+    Left = 24
+    Height = 32
+    Top = 19
+    Width = 32
+    AutoSize = True
+    Picture.Data = {
+      1754506F727461626C654E6574776F726B47726170686963B702000089504E47
+      0D0A1A0A0000000D4948445200000020000000200806000000737A7AF4000000
+      097048597300000EC300000EC301C76FA8640000001974455874536F66747761
+      7265007777772E696E6B73636170652E6F72679BEE3C1A000002444944415458
+      85E5973B6F13511085BFB3F622A04B8144438910763A1E6564F8013464D320A5
+      0B6DBA20213BB61384AC508028898468686C37D02322E87854604782829E5F40
+      EC7887C2DEB51D1BAF63EFCA0553EDCE7DCC99993BE7CE9599B14871166A1D48
+      27B5B1EADF73988AC08D9EEA13E8997999B743F3924881EA8D3C4699F111DE31
+      2F5B0C7E624F41D773CA401B6C0BB7BD84DB5EC26C133802F2AA1EAE04F3E34F
+      8139253007AC60DEF2938191E7AA36CE212AC82F01B721914368D700708FF747
+      86A440773D50255105D31CAA704E6C0054C651BDE90129005AE9F551B3B6D1FB
+      FA12AE9BB70A54ABA550E61E461EB83C307484D8A6E5EFE3A684D90662074823
+      E56C35F3712E002AE3906DDEC5D805BBD2D3FE022AA87309731E321A611FB382
+      AD2D3F0EF73909208A40261ABEF0FBA5E572C700AA1EAE20BF08DCA49BF3CF48
+      A5C0F3B100261288B18BA36F51864F2B21809EE7EFE81248212CA3567A1D690F
+      710643BD753F118FB0E66BF3BCCE2C8603E9135114814005E30FD266DFE3EC3C
+      B681A1504F4120A26D5EE6C5ACE18E00703A024902C057208240E4AAD6BCAF83
+      83D8EE90FE21AC35EF80BDE15F0422DC240EE17019D61A6520CF3802F16D9B94
+      F323B1320C15110432351125DD114D04E2742EE23B45A6E88892B98C8461B4C6
+      121AB89873CBD6AE7E88054008248808F60AE33CD8D6094243D5C6034405786F
+      5E36DE8EC88AF8B69AA961F8C07FD8110DC81484D6EF88127898E829580E694F
+      F5C6D9311D918F540A6727F230994468511D516C2066E98816210B7F1DFF058D
+      EC631B307E4A140000000049454E44AE426082
+    }
   end
 end
