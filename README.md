@@ -1,8 +1,8 @@
-# MyLinksXE
+# MyLinksXE2
 A Free Opensource Bookmarks Manager
 
 ## About
-MyLink’s XE is a free and opensource program made in Lazarus to store all your favourite bookmarks or recent you visit all in one place.
+MyLink’s XE2 is a free and opensource program made in Lazarus to store all your favourite bookmarks or recent you visit all in one place.
 
 ## Features
 
@@ -16,9 +16,9 @@ MyLink’s XE is a free and opensource program made in Lazarus to store all your
 -	Auto complete search for categories and bookmarks
 -	Create an Internet Shortcut to any location (Note this only works with the Windows .URL format)
 
-## Screen
+## Screenshot
 
-<img width="398" alt="logo" src="https://user-images.githubusercontent.com/17520035/219495899-2736d81d-5f43-4fe1-a184-6d694baa37d6.png">
+<img width="384" alt="logo" src="https://user-images.githubusercontent.com/17520035/219895777-e58a4242-c3c6-442a-877e-1e83cf7d7928.png">
 
 ## Update Version XE1
 
@@ -29,6 +29,14 @@ MyLink’s XE is a free and opensource program made in Lazarus to store all your
 - Added export to Internet Explorer shortcuts
 - Changed the .cats format now look like an INI file
 - Up dated a few other things
+
+## Update Version XE2
+
+- Fixed small bug when importing categories.
+- Made a few updates to the GUI
+- You can now vote a star for your bookmark.
+- Added programs about box.
+- Done a few other adjustments
 
 ## Other
 This projected uses the lazarus-main-images-general_purpose more on this icon pack can be found here
