@@ -1,13 +1,14 @@
 object frmLinks: TfrmLinks
-  Left = 789
+  Left = 622
   Height = 660
-  Top = 190
+  Top = 204
   Width = 755
-  Caption = 'My Links XE1'
+  Caption = 'My Links XE2'
   ClientHeight = 660
   ClientWidth = 755
   DesignTimePPI = 144
   OnCreate = FormCreate
+  OnWindowStateChange = FormWindowStateChange
   LCLVersion = '2.2.4.0'
   object StatusBar1: TStatusBar
     Left = 0
@@ -233,7 +234,7 @@ object frmLinks: TfrmLinks
       ParentShowHint = False
     end
     object cmdCatDelete: TSpeedButton
-      Left = 76
+      Left = 75
       Height = 33
       Hint = 'Delete Category'
       Top = 40
@@ -405,7 +406,7 @@ object frmLinks: TfrmLinks
       ParentShowHint = False
     end
     object cmdRestore: TSpeedButton
-      Left = 152
+      Left = 148
       Height = 33
       Hint = 'Restore Categories'
       Top = 40
@@ -524,7 +525,7 @@ object frmLinks: TfrmLinks
       Width = 489
       Align = alTop
       Caption = 'Bookmarks'
-      Color = 11039113
+      Color = 10511229
       Font.Color = clWhite
       ParentColor = False
       ParentFont = False
@@ -703,7 +704,7 @@ object frmLinks: TfrmLinks
       ParentShowHint = False
     end
     object cmdLinksDelete: TSpeedButton
-      Left = 106
+      Left = 100
       Height = 33
       Hint = 'Delete Bookmark'
       Top = 40
@@ -790,7 +791,7 @@ object frmLinks: TfrmLinks
     end
     object LstLinks: TListBox
       Left = 3
-      Height = 315
+      Height = 263
       Top = 120
       Width = 473
       Anchors = [akTop, akLeft, akRight, akBottom]
@@ -810,7 +811,7 @@ object frmLinks: TfrmLinks
       TabOrder = 1
     end
     object cmdOpenLink: TSpeedButton
-      Left = 150
+      Left = 151
       Height = 33
       Hint = 'Open Bookmark'
       Top = 40
@@ -896,7 +897,7 @@ object frmLinks: TfrmLinks
       ParentShowHint = False
     end
     object cmdMoveLink: TSpeedButton
-      Left = 264
+      Left = 257
       Height = 33
       Hint = 'Move Bookmark'
       Top = 40
@@ -982,7 +983,7 @@ object frmLinks: TfrmLinks
       ParentShowHint = False
     end
     object cmdExportLinks: TSpeedButton
-      Left = 305
+      Left = 292
       Height = 33
       Hint = 'Export All Bookmarks'
       Top = 40
@@ -1257,7 +1258,7 @@ object frmLinks: TfrmLinks
       ParentColor = False
     end
     object cmdCopyUrl: TSpeedButton
-      Left = 72
+      Left = 68
       Height = 33
       Hint = 'Copy Bookmark URL'
       Top = 40
@@ -1343,19 +1344,21 @@ object frmLinks: TfrmLinks
       ParentShowHint = False
     end
     object Panel4: TPanel
-      Left = 3
-      Height = 171
-      Top = 448
-      Width = 471
+      Left = 0
+      Height = 235
+      Top = 384
+      Width = 475
       Anchors = [akLeft, akRight, akBottom]
       BevelOuter = bvNone
-      ClientHeight = 171
-      ClientWidth = 471
+      ClientHeight = 235
+      ClientWidth = 475
+      Color = 16250871
+      ParentColor = False
       TabOrder = 3
       object lblUrlTitle: TLabel
         Left = 8
         Height = 25
-        Top = -1
+        Top = 43
         Width = 35
         Caption = 'URL:'
         ParentColor = False
@@ -1363,12 +1366,14 @@ object frmLinks: TfrmLinks
       object lblUrl: TLabel
         Cursor = crHandPoint
         Left = 56
-        Height = 25
-        Top = -1
-        Width = 53
+        Height = 18
+        Top = 46
+        Width = 57
         Caption = 'http://'
         Font.CharSet = ANSI_CHARSET
         Font.Color = clBlue
+        Font.Height = -16
+        Font.Name = 'Verdana'
         Font.Pitch = fpVariable
         Font.Quality = fqDraft
         Font.Style = [fsItalic, fsUnderline]
@@ -1379,10 +1384,10 @@ object frmLinks: TfrmLinks
         OnMouseLeave = lblUrlMouseLeave
       end
       object txtDesc: TMemo
-        Left = 9
-        Height = 101
-        Top = 64
-        Width = 460
+        Left = 8
+        Height = 109
+        Top = 120
+        Width = 464
         Anchors = [akLeft, akRight, akBottom]
         ReadOnly = True
         TabOrder = 0
@@ -1390,7 +1395,7 @@ object frmLinks: TfrmLinks
       object lblUrlTitle1: TLabel
         Left = 8
         Height = 25
-        Top = 31
+        Top = 82
         Width = 45
         Caption = 'Views'
         ParentColor = False
@@ -1398,7 +1403,7 @@ object frmLinks: TfrmLinks
       object lblViews: TLabel
         Left = 64
         Height = 25
-        Top = 31
+        Top = 82
         Width = 10
         Caption = '0'
         Font.CharSet = ANSI_CHARSET
@@ -1410,9 +1415,100 @@ object frmLinks: TfrmLinks
         ParentColor = False
         ParentFont = False
       end
+      object Panel5: TPanel
+        Left = 0
+        Height = 35
+        Top = 0
+        Width = 475
+        Align = alTop
+        Caption = 'Bookmark Information'
+        Color = 10511229
+        Font.Color = clWhite
+        ParentColor = False
+        ParentFont = False
+        TabOrder = 1
+      end
+      object shpVote: TShape
+        Tag = 1
+        Cursor = crHandPoint
+        Left = 208
+        Height = 25
+        Top = 80
+        Width = 28
+        OnChangeBounds = shpVoteChangeBounds
+        OnMouseDown = shpVoteMouseDown
+        Shape = stStar
+      end
+      object lblVotes: TLabel
+        Left = 152
+        Height = 25
+        Top = 82
+        Width = 44
+        Caption = 'Votes'
+        ParentColor = False
+      end
+      object shpVote1: TShape
+        Tag = 2
+        Cursor = crHandPoint
+        Left = 248
+        Height = 25
+        Top = 80
+        Width = 28
+        OnChangeBounds = shpVoteChangeBounds
+        OnMouseDown = shpVoteMouseDown
+        Shape = stStar
+      end
+      object shpVote2: TShape
+        Tag = 3
+        Cursor = crHandPoint
+        Left = 288
+        Height = 25
+        Top = 80
+        Width = 28
+        OnChangeBounds = shpVoteChangeBounds
+        OnMouseDown = shpVoteMouseDown
+        Shape = stStar
+      end
+      object shpVote3: TShape
+        Tag = 4
+        Cursor = crHandPoint
+        Left = 328
+        Height = 25
+        Top = 80
+        Width = 28
+        OnChangeBounds = shpVoteChangeBounds
+        OnMouseDown = shpVoteMouseDown
+        Shape = stStar
+      end
+      object shpVote4: TShape
+        Tag = 5
+        Cursor = crHandPoint
+        Left = 368
+        Height = 25
+        Top = 80
+        Width = 28
+        OnChangeBounds = shpVoteChangeBounds
+        OnMouseDown = shpVoteMouseDown
+        Shape = stStar
+      end
+      object lblVoteNum: TLabel
+        Left = 408
+        Height = 21
+        Top = 83
+        Width = 25
+        Caption = '0/5'
+        Font.CharSet = ANSI_CHARSET
+        Font.Height = -16
+        Font.Name = 'Segoe UI Semibold'
+        Font.Pitch = fpVariable
+        Font.Quality = fqDraft
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
     end
     object cmdAbout: TSpeedButton
-      Left = 439
+      Left = 407
       Height = 33
       Hint = 'About'
       Top = 40
@@ -1495,6 +1591,93 @@ object frmLinks: TfrmLinks
         FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00
       }
       OnClick = cmdAboutClick
+      ShowHint = True
+      ParentShowHint = False
+    end
+    object cmdExit: TSpeedButton
+      Left = 441
+      Height = 33
+      Hint = 'Exit'
+      Top = 40
+      Width = 35
+      Anchors = [akTop, akRight]
+      Glyph.Data = {
+        36090000424D3609000000000000360000002800000018000000180000000100
+        2000000000000009000064000000640000000000000000000000FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00995933149964
+        3A66A36C43AEA16C44CBA16C44CBA36C43AE9A653A6599593314FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00906437179F6A41A8A9754CE7D39E
+        79F8EEBA98FFFAC6A4FFFAC6A4FFEDBA97FFD39E79F8A9744CE79F6A41A8975D
+        3A16FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF0096643B3DA26E45E4E3B08CFDFFCCAAFFFFCC
+        AAFFFFCCAAFFFFCCAAFFFFCCAAFFFFCCAAFFFFCCAAFFFFCCAAFFE2AE8AFDA26E
+        44E496643B3DFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF0096643B3DA9744BEAF7C4A1FFFFCCAAFFFFCCAAFFFFCC
+        AAFFFFCCAAFFFFCCAAFFFFCCAAFFFFCCAAFFFFCCAAFFFFCCAAFFFFCCAAFFF7C3
+        A1FFA9744BEA99663C3CFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF0095603518A26E45E4F7C4A1FFFFCCAAFFFFCCAAFFFCC9A6FFCF9B
+        75F4A77248E5A16C44DBA16C44DBA77249E5CF9C76F5FCC9A7FFFFCCAAFFFFCC
+        AAFFF7C4A1FFA26E44E4975D3A16FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00A06B41A9E4B08CFDFFCCAAFFFFCCAAFFF3C09DFFA67047E89C67
+        3C6F8E553909FFFFFF00FFFFFF008E5539099C683F71A67047E8F3C09DFFFFCC
+        AAFFFFCCAAFFE3AF8BFD9F6C42A7FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF0092613115AA764CE7FFCCAAFFFFCCAAFFFCC9A7FFA67047E8975D342CFFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF009360332DA67047E8FCC9
+        A6FFFFCCAAFFFFCCAAFFA9754CE799593314FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF009A653B68D4A07AF8FFCCAAFFFFCCAAFFCE9A74F49B683C6EFFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF009C683F71CF9B
+        76F5FFCCAAFFFFCCAAFFD39E79F89A653A65FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00A26D44B0EFBC98FFFFCCAAFFFFCCAAFFA67248E59F604008FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF008E553909A772
+        49E5FFCCAAFFFFCCAAFFEEBA98FFA26D44AFFFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00A16C44CBFAC6A4FFFFCCAAFFFFCCAAFFA16D44DAFFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00A26C
+        44DBFFCCAAFFFFCCAAFFF9C6A4FFA26D44CAFFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00A16C43D0FCC9A7FFFFCCAAFFFFCCAAFFA16D44DAFFFFFF00FFFFFF00FFFF
+        FF00986339F2AA764EE5AA764EE5986339F2FFFFFF00FFFFFF00FFFFFF00A16C
+        44DBFFCCAAFFFFCCAAFFFBC8A6FFA16C43CFFFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00A26E45B5F0BC99FFFFCCAAFFFFCCAAFFA67248E59F604008FFFFFF00FFFF
+        FF00AA764EE5FFCCAAFFFFCCAAFFAA764EE5FFFFFF00FFFFFF008E553909A772
+        49E5FFCCAAFFFFCCAAFFEFBC99FFA26C43B3FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF009A653C6FD6A37EFBFFCCAAFFFFCCAAFFCF9B75F49C673C6FFFFFFF00FFFF
+        FF00AA764EE5FFCCAAFFFFCCAAFFAA764EE5FFFFFF00FFFFFF009D663D75D09D
+        76F6FFCCAAFFFFCCAAFFD5A27CFB99663B6CFFFFFF00FFFFFF00FFFFFF00FFFF
+        FF0090643717AB774EE7FFCCAAFFFFCCAAFFFCC9A7FFA67047E896623522FFFF
+        FF00AA764EE5FFCCAAFFFFCCAAFFAA764EE5FFFFFF0090643717A67148E7FCC9
+        A6FFFFCCAAFFFFCCAAFFAA764CE7975D3A16FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF009F6A42AFE5B28FFDFFCCAAFFFFCCAAFFCE9A75F7945E3651FFFF
+        FF00AA764EE5FFCCAAFFFFCCAAFFAA764EE5FFFFFF0095603530BE8963EAFFCC
+        AAFFFFCCAAFFE5B18DFEA06C42AFFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00995C3319A36E45E5F9C6A3FFFFCCAAFFCE9A75F7945E3651FFFF
+        FF00AA764EE5FFCCAAFFFFCCAAFFAA764EE5FFFFFF0095603530BE8963EAFFCC
+        AAFFF8C5A2FFA36E45E590643717FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF009A653844AA754CEAF8C5A2FFCE9A75F7945E3651FFFF
+        FF00AA764EE5FFCCAAFFFFCCAAFFAA764EE5FFFFFF0095603530BE8963EAF8C4
+        A3FFA9744CE99B613A42FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF009B613A42A36E45E5B8845DF9945E3651FFFF
+        FF00AA764EE5FFCCAAFFFFCCAAFFAA764EE5FFFFFF0095603530AB764EF2A36E
+        44E597643C40FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00956035189E6840AB92603738FFFF
+        FF00AA764EE5FFCCAAFFFFCCAAFFAA764EE5FFFFFF00975E391B9C663DA2975D
+        3A16FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00AA764EE5FFCCAAFFFFCCAAFFAA764EE5FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00AA764EE5FFCCAAFFFFCCAAFFAA764EE5FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00986339F2AA764EE5AA764EE5986339F2FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00
+      }
+      OnClick = cmdExitClick
       ShowHint = True
       ParentShowHint = False
     end
@@ -1673,6 +1856,24 @@ object frmLinks: TfrmLinks
     object mnuExportFav: TMenuItem
       Caption = 'Export To Windows Internet Favorites'
       OnClick = mnuExportFavClick
+    end
+  end
+  object Tray1: TTrayIcon
+    PopUpMenu = mnuTray
+    OnClick = Tray1Click
+    Left = 344
+    Top = 216
+  end
+  object mnuTray: TPopupMenu
+    Left = 408
+    Top = 224
+    object mnuTrayAbout: TMenuItem
+      Caption = 'About My Links EX1'
+      OnClick = mnuTrayAboutClick
+    end
+    object mnuTrayExit: TMenuItem
+      Caption = 'Exit'
+      OnClick = mnuTrayExitClick
     end
   end
 end

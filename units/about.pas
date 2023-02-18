@@ -5,7 +5,8 @@ unit about;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Tools,
+  lclintf, ExtCtrls;
 
 type
 
@@ -13,10 +14,15 @@ type
 
   TfrmAbout = class(TForm)
     cmdOK: TButton;
+    imgLogo: TImage;
+    lblWebsite: TLabel;
     lblInfo: TLabel;
     lblDevOp: TLabel;
     lblTitle: TLabel;
     procedure cmdOKClick(Sender: TObject);
+    procedure lblWebsiteClick(Sender: TObject);
+    procedure lblWebsiteMouseEnter(Sender: TObject);
+    procedure lblWebsiteMouseLeave(Sender: TObject);
   private
 
   public
@@ -37,5 +43,19 @@ begin
   Close;
 end;
 
-end.
+procedure TfrmAbout.lblWebsiteClick(Sender: TObject);
+begin
+  OpenURL('https://github.com/DreamVB/MyLinksXE');
+end;
 
+procedure TfrmAbout.lblWebsiteMouseEnter(Sender: TObject);
+begin
+  lblWebsite.Font.Color := clRed;
+end;
+
+procedure TfrmAbout.lblWebsiteMouseLeave(Sender: TObject);
+begin
+  lblWebsite.Font.Color := clBlue;
+end;
+
+end.
