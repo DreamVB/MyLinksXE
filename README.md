@@ -36,6 +36,7 @@ MyLink’s XE2 is a free and opensource program made in Lazarus to store all you
 - Made a few updates to the GUI
 - You can now vote a star for your bookmark.
 - Added programs about box.
+- Send program to the tray.
 - Done a few other adjustments
 
 ## Other
