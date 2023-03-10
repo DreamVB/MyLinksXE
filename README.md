@@ -52,8 +52,6 @@ MyLink’s XE2 is a free and opensource program made in Lazarus to store all you
 - Export all bookmarks updated so you can set the colours or the webpage.
 - Done a few other updates.
 
-- 
-
 ## Other
 This projected uses the lazarus-main-images-general_purpose more on this icon pack can be found here
 
