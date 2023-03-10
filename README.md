@@ -1,4 +1,4 @@
-# MyLinksXE2
+# MyLinks XE2 - Update 2
 A Free Opensource Bookmarks Manager
 
 ## About
@@ -18,7 +18,7 @@ MyLink’s XE2 is a free and opensource program made in Lazarus to store all you
 
 ## Screenshot
 
-<img width="384" alt="logo" src="https://user-images.githubusercontent.com/17520035/219895777-e58a4242-c3c6-442a-877e-1e83cf7d7928.png">
+<img width="380" alt="logo" src="https://user-images.githubusercontent.com/17520035/224432349-f076e53d-57b5-440d-b41e-b9cd077df13a.png">
 
 ## Update Version XE1
 
@@ -38,6 +38,21 @@ MyLink’s XE2 is a free and opensource program made in Lazarus to store all you
 - Added programs about box.
 - Send program to the tray.
 - Done a few other adjustments
+
+## Update Version XE2 - Update 2
+- Few changes to GUI
+- Fixed a few more bugs
+- You can now assign an icon for bookmarks and categories.
+- Web browsers are now configurable from a new dialog box
+- Default browser can now be assigned when opening links.
+- Added clear all bookmarks from category.
+- Added duplicate category.
+- Added duplicate bookmark.
+- Updated move to dialog.
+- Export all bookmarks updated so you can set the colours or the webpage.
+- Done a few other updates.
+
+- 
 
 ## Other
 This projected uses the lazarus-main-images-general_purpose more on this icon pack can be found here
