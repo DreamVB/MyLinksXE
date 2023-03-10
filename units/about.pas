@@ -15,6 +15,7 @@ type
   TfrmAbout = class(TForm)
     cmdOK: TButton;
     imgLogo: TImage;
+    lblUpdate: TLabel;
     lblWebsite: TLabel;
     lblInfo: TLabel;
     lblDevOp: TLabel;

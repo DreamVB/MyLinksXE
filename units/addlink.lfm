@@ -1,14 +1,15 @@
 object frmAddLink: TfrmAddLink
-  Left = 689
-  Height = 356
-  Top = 316
-  Width = 554
+  Left = 1043
+  Height = 410
+  Top = 283
+  Width = 553
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'New'
-  ClientHeight = 356
-  ClientWidth = 554
+  ClientHeight = 410
+  ClientWidth = 553
   DesignTimePPI = 144
+  OnCreate = FormCreate
   Position = poMainFormCenter
   LCLVersion = '2.2.4.0'
   object lblLinkName: TLabeledEdit
@@ -35,25 +36,26 @@ object frmAddLink: TfrmAddLink
     EditLabel.ParentColor = False
     TabOrder = 1
     Text = 'http://'
+    OnKeyPress = lblLinkAddressKeyPress
   end
   object cmdOK: TButton
-    Left = 32
+    Left = 40
     Height = 38
-    Top = 296
-    Width = 113
+    Top = 352
+    Width = 112
     Caption = 'Add'
     Enabled = False
     OnClick = cmdOKClick
-    TabOrder = 3
+    TabOrder = 4
   end
   object cmdClose: TButton
-    Left = 152
+    Left = 160
     Height = 38
-    Top = 296
-    Width = 113
+    Top = 352
+    Width = 112
     Caption = 'Close'
     OnClick = cmdCloseClick
-    TabOrder = 4
+    TabOrder = 5
   end
   object ImgLogo: TImage
     Left = 41
@@ -149,11 +151,12 @@ object frmAddLink: TfrmAddLink
     Left = 88
     Height = 25
     Top = 23
-    Width = 290
-    Caption = 'Include your link information below.'
+    Width = 327
+    Caption = 'Include your bookmarks details below.'
     Font.CharSet = ANSI_CHARSET
     Font.Color = clGray
-    Font.Name = 'Segoe UI Semibold'
+    Font.Height = -18
+    Font.Name = 'Segoe UI'
     Font.Pitch = fpVariable
     Font.Quality = fqDraft
     Font.Style = [fsBold, fsItalic]
@@ -170,5 +173,26 @@ object frmAddLink: TfrmAddLink
     EditLabel.Caption = 'Bookmark Description'
     EditLabel.ParentColor = False
     TabOrder = 2
+    OnKeyPress = lblDescriptionKeyPress
+  end
+  object StaticText1: TStaticText
+    Left = 32
+    Height = 26
+    Top = 296
+    Width = 120
+    AutoSize = True
+    Caption = 'Bookmark Icon'
+    TabOrder = 6
+  end
+  object cboIcons: TComboBox
+    Left = 169
+    Height = 31
+    Top = 293
+    Width = 112
+    ItemHeight = 25
+    OnDrawItem = cboIconsDrawItem
+    OnMeasureItem = cboIconsMeasureItem
+    Style = csOwnerDrawVariable
+    TabOrder = 3
   end
 end

@@ -5,9 +5,9 @@ program mylinks;
 uses
  {$IFDEF UNIX}
   cthreads,
-                                                                     {$ENDIF} {$IFDEF HASAMIGA}
+                                                                                           {$ENDIF} {$IFDEF HASAMIGA}
   athreads,
-                                                                     {$ENDIF}
+                                                                                           {$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms,
   main,
@@ -15,7 +15,11 @@ uses
   addlink,
   linkmove,
   linkshare,
-  about { you can add units after this };
+  about,
+  browsercfg,
+  listimages,
+  addcat,
+  htmlprop { you can add units after this };
 
 {$R *.res}
 
@@ -29,5 +33,9 @@ begin
   Application.CreateForm(TfrmMoveLink, frmMoveLink);
   Application.CreateForm(TfrmShareLink, frmShareLink);
   Application.CreateForm(TfrmAbout, frmAbout);
+  Application.CreateForm(TfrmBrowsers, frmBrowsers);
+  Application.CreateForm(TfrmTemp, frmTemp);
+  Application.CreateForm(TfrmCatAdd, frmCatAdd);
+  Application.CreateForm(TfrmHtml, frmHtml);
   Application.Run;
 end.

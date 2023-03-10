@@ -74,6 +74,30 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
+      <Unit>
+        <Filename Value="units\browsercfg.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmBrowsers"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="units\listimages.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmTemp"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="units\addcat.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmCatAdd"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="units\htmlprop.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmHtml"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

@@ -7,20 +7,29 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, ExtCtrls,
   StdCtrls, Buttons, Tools, addlink, linkmove, LCLType, lclintf, LazFileUtils,
-  Menus, FileBag, linkshare, Clipbrd, process, IniFiles, Types, about;
+  Menus, FileBag, linkshare, Clipbrd, process, IniFiles, Types, about,
+  browsercfg, addcat, htmlprop;
 
 type
 
   { TfrmLinks }
 
   TfrmLinks = class(TForm)
+    cmdCatDup: TSpeedButton;
+    cmdClearBookmarks: TSpeedButton;
+    imgBar: TImage;
+    lblCat: TLabel;
+    lblBookmarks: TLabel;
+    lblBookmarkInfo: TLabel;
     lblVoteNum: TLabel;
     lblVotes: TLabel;
+    mnuMakeCopy: TMenuItem;
+    mnuClearBookmarks: TMenuItem;
     mnuTrayExit: TMenuItem;
     mnuTrayAbout: TMenuItem;
     cmdExit: TSpeedButton;
     cmdBackup: TSpeedButton;
-    cmdCopyUrl: TSpeedButton;
+    cmdUrlCpy: TSpeedButton;
     cmdAbout: TSpeedButton;
     cmdShareTwitter: TSpeedButton;
     cmdRestore: TSpeedButton;
@@ -30,12 +39,11 @@ type
     cmdOpenLink: TSpeedButton;
     cmdMoveLink: TSpeedButton;
     cmdShortcut: TSpeedButton;
-    ImgIcons: TImageList;
     lblUrlTitle: TLabel;
     lblUrl: TLabel;
     lblUrlTitle1: TLabel;
     lblViews: TLabel;
-    Panel5: TPanel;
+    pBookmarkInfoCanvas: TPanel;
     mnuTray: TPopupMenu;
     shpVote: TShape;
     shpVote1: TShape;
@@ -72,8 +80,8 @@ type
     Separator1: TMenuItem;
     mnuOpenLink: TMenuItem;
     Panel1: TPanel;
-    Panel2: TPanel;
-    Panel3: TPanel;
+    pCarCanvas: TPanel;
+    pBookmarksCanvas: TPanel;
     pBase: TPanel;
     cmdCatAdd: TSpeedButton;
     cmdLinkAdd: TSpeedButton;
@@ -86,7 +94,9 @@ type
     procedure cmdBackupClick(Sender: TObject);
     procedure cmdCatAddClick(Sender: TObject);
     procedure cmdCatDeleteClick(Sender: TObject);
+    procedure cmdCatDupClick(Sender: TObject);
     procedure cmdCatEditClick(Sender: TObject);
+    procedure cmdClearBookmarksClick(Sender: TObject);
     procedure cmdCopyUrlClick(Sender: TObject);
     procedure cmdExportLinksClick(Sender: TObject);
     procedure cmdLinkAddClick(Sender: TObject);
@@ -97,6 +107,7 @@ type
     procedure cmdRestoreClick(Sender: TObject);
     procedure cmdShareTwitterClick(Sender: TObject);
     procedure cmdShortcutClick(Sender: TObject);
+    procedure cmdUrlCpyClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormWindowStateChange(Sender: TObject);
     procedure lblUrlClick(Sender: TObject);
@@ -120,6 +131,7 @@ type
     procedure mnuCatEditClick(Sender: TObject);
     procedure mnuCatExportClick(Sender: TObject);
     procedure mnuCatInportLinksClick(Sender: TObject);
+    procedure mnuClearBookmarksClick(Sender: TObject);
     procedure mnuCopyUrlClick(Sender: TObject);
     procedure cmdExitClick(Sender: TObject);
     procedure mnuExportFavClick(Sender: TObject);
@@ -128,12 +140,15 @@ type
     procedure mnuLinkEditClick(Sender: TObject);
     procedure mnuLinkMoveClick(Sender: TObject);
     procedure mnuLinkNewClick(Sender: TObject);
+    procedure mnuMakeCopyClick(Sender: TObject);
     procedure mnuNewCatClick(Sender: TObject);
     procedure mnuShareBookmarkClick(Sender: TObject);
     procedure mnuShortcutClick(Sender: TObject);
     procedure mnuTrayAboutClick(Sender: TObject);
     procedure mnuTrayExitClick(Sender: TObject);
-    procedure shpVoteChangeBounds(Sender: TObject);
+    procedure pCarCanvasPaint(Sender: TObject);
+    procedure pBookmarksCanvasPaint(Sender: TObject);
+    procedure pBookmarkInfoCanvasPaint(Sender: TObject);
     procedure shpVoteMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: integer);
     procedure Tray1Click(Sender: TObject);
@@ -141,19 +156,27 @@ type
     procedure txtSearchLinksChange(Sender: TObject);
   private
     procedure LoadCats;
+    procedure AddCatIcon(cName: string; nIcon: integer);
+    procedure EditCatName(cOldName, cNewName: string; nIcon: integer);
+    procedure DeleteCatIcon(cName: string);
+    function GetCatIcon(cName: string): integer;
     procedure ErrorMsgCat(S: string);
-    procedure AddLinkInfo(lName, lAddress, lDesc: string);
+    procedure AddLinkInfo(lName, lAddress, lDesc: string; nIcon: integer);
     procedure LoadLinks;
-    procedure EditCatLink(oldName, NewName, lAddress, lDesc: string; nViews,nVotes: integer);
+    procedure EditCatLink(oldName, NewName, lAddress, lDesc: string;
+      nViews, nVotes, nIcon: integer);
+    procedure DupCatLink(NewName, lAddress, lDesc: string;
+      nViews, nVotes, nIcon: integer);
     procedure DeleteLink(sName: string);
     function GetLinkName(Index: integer): string;
     function GetLinkUrl(Index: integer): string;
     procedure UpdateLinkViews(Index: integer);
     function GetLinkDescription(Index: integer): string;
     function GetLinkViews(Index: integer): integer;
-    function GetLinkVotes(Index : Integer) : Integer;
+    function GetLinkVotes(Index: integer): integer;
+    function GetLinkIcon(Index: integer): integer;
     procedure MoveLinkToCat(MoveFromCat, MoveToCat: string;
-      sName, lDesc: string; nViews,nVotes: integer);
+      sName, lDesc: string; nViews, nVotes, nIcon: integer);
     procedure BackupLinks;
     procedure RestoreLinks;
     function GetDlgSaveName(Title, dFilter, Filename, defExt: string): string;
@@ -162,12 +185,16 @@ type
     procedure SearchListBox(sFind: string; lBox: TListBox);
     function GetProfileName: string;
     procedure LoadBrowsers;
+    procedure BrowserConfig_Click(Sender: TObject);
     procedure Browser_Click(Sender: TObject);
+    procedure OpenInBrowser(Index: integer);
     procedure ExportToHtml;
     procedure ExportToIEFav;
     procedure CountCatsAndBookmarks;
     procedure ClearBookmarInfo;
     procedure SetVotes(ID: integer);
+    procedure ShowHideVotes(iShow: boolean);
+    procedure PaintBar(TP: TPanel);
   public
 
   end;
@@ -175,6 +202,7 @@ type
 var
   frmLinks: TfrmLinks;
   Browsers: TStringList;
+  KeyPressCancel: boolean;
 
 const
   BadCatName = 'The category name contains illegal characters.' +
@@ -188,11 +216,30 @@ const
 const
   ErrorOpeningUrl = 'There was an error while opening the bookmark.';
 
+const
+  BookmarkExsists = 'The bookmark already exists.';
+
 implementation
 
 {$R *.lfm}
 
 { TfrmLinks }
+
+procedure TfrmLinks.PaintBar(TP: TPanel);
+begin
+  TP.Canvas.Brush.Bitmap := imgBar.Picture.Bitmap;
+  TP.Canvas.FillRect(0, 0, TP.Width, TP.Height);
+end;
+
+procedure TfrmLinks.ShowHideVotes(iShow: boolean);
+begin
+  shpVote.Visible := iShow;
+  shpVote1.Visible := iShow;
+  shpVote2.Visible := iShow;
+  shpVote3.Visible := iShow;
+  shpVote4.Visible := iShow;
+  lblVoteNum.Visible := iShow;
+end;
 
 procedure TfrmLinks.SetVotes(ID: integer);
 begin
@@ -245,7 +292,7 @@ end;
 procedure TfrmLinks.ClearBookmarInfo;
 begin
   lblurl.Caption := '';
-  lblViews.Caption := '0';
+  lblViews.Caption := '';
   txtDesc.Clear;
   SetVotes(0);
 end;
@@ -356,6 +403,7 @@ var
   iData: TStringList;
   HtmlData: TStringList;
   sBookMarks: TStringList;
+  frm: TfrmHtml;
   I: integer;
   tf: TextFile;
   ini: TIniFile;
@@ -364,66 +412,101 @@ begin
 
   if lstCats.Count <> 0 then
   begin
-
-    cName := lstCats.Items[lstCats.ItemIndex];
-    //Load template
-    iData := TStringList.Create;
-
-    HtmlData := TStringList.Create;
-    sBookMarks := TStringList.Create;
-    iData.LoadFromFile(ExportTemplate);
-
-    if FindFirstUTF8(BasePath + '*.cat', faAnyFile, sr) = 0 then
+    Tools.ButtonPress := 0;
+    frm := TfrmHtml.Create(self);
+    frm.ShowModal;
+    if Tools.ButtonPress = 1 then
     begin
-      repeat
-        CatPath := BasePath + sr.Name;
-        //Get cat name
-        cName := ExtractFileNameOnly(CatPath);
-        //Load the bookmarks and generate the webpage
-        ini := TIniFile.Create(CatPath);
-        //Load selections
-        ini.ReadSections(sBookMarks);
-        //Add the bookmarks header
-        HtmlData.Add('<h2>' + cName + '</h2>');
+      cName := lstCats.Items[lstCats.ItemIndex];
+      //Load template
+      iData := TStringList.Create;
 
-        if sBookMarks.Count > 0 then
-        begin
-          //Loop tho the bookmarks
-          for I := 0 to sBookMarks.Count - 1 do
+      HtmlData := TStringList.Create;
+      sBookMarks := TStringList.Create;
+      iData.LoadFromFile(ExportTemplate);
+
+      if FindFirstUTF8(BasePath + '*.cat', faAnyFile, sr) = 0 then
+      begin
+        repeat
+          CatPath := BasePath + sr.Name;
+          //Get cat name
+          cName := ExtractFileNameOnly(CatPath);
+          //Load the bookmarks and generate the webpage
+          ini := TIniFile.Create(CatPath);
+          //Load selections
+          ini.ReadSections(sBookMarks);
+          //Add the bookmarks header
+          HtmlData.Add('<h2 class="cat-header">' + cName + '</h2>');
+
+          if sBookMarks.Count > 0 then
           begin
-            cName := sBookMarks[I];
-            cLink := ini.ReadString(cName, 'URL', '');
-            cDesc := ini.ReadString(cName, 'INFO', '');
-            //Add hyperlink
-            HtmlData.Add('<a href="' + cLink + '" target="_blank">' + cName + '</a>');
-            HtmlData.Add('<span class="info">' + cDesc + '</span>');
+            //Loop tho the bookmarks
+            for I := 0 to sBookMarks.Count - 1 do
+            begin
+              cName := sBookMarks[I];
+              cLink := ini.ReadString(cName, 'URL', '');
+              cDesc := ini.ReadString(cName, 'INFO', '');
+              //Add hyperlink
+              HtmlData.Add('<a href="' + cLink + '" target="_blank">' + cName + '</a>');
+              HtmlData.Add('<span class="info">' + cDesc + '</span>');
+            end;
           end;
-        end;
-        HtmlData.Add('<hr>');
-      until FindNextUTF8(sr) <> 0;
+          HtmlData.Add('<hr>');
+        until FindNextUTF8(sr) <> 0;
+      end;
+
+      sData := Trim(iData.Text);
+
+      sData := StringReplace(sData, '%header-title%', tools.HtmlPageTitle,
+        [rfIgnoreCase, rfReplaceAll]);
+      sData := StringReplace(sData, '%page-color%', tools.HtmlPageBkColor,
+        [rfIgnoreCase, rfReplaceAll]);
+      sData := StringReplace(sData, '%header-color%', tools.HtmlPageHeaderColor,
+        [rfIgnoreCase, rfReplaceAll]);
+      sData := StringReplace(sData, '%cat-color%', tools.HtmlPageCatTextColor,
+        [rfIgnoreCase, rfReplaceAll]);
+      sData := StringReplace(sData, '%info-color%', tools.HtmlPageBookmarkDescription,
+        [rfIgnoreCase, rfReplaceAll]);
+      sData := StringReplace(sData, '%link-color%', tools.HtmlPageLinkColor,
+        [rfIgnoreCase, rfReplaceAll]);
+      sData := StringReplace(sData, '%link-hover%', tools.HtmlPageLinkHoverColor,
+        [rfIgnoreCase, rfReplaceAll]);
+
+      sData := StringReplace(sData, '%BOOKMARK_DATA%', HtmlData.Text,
+        [rfIgnoreCase, rfReplaceAll]);
+
+      //Save the data
+      lzFile := GetDlgSaveName('Export', 'Html Files(*.html)|*.html|All Files(*.*)|*.*',
+        'bookmarks', 'html');
+      if lzFile <> '' then
+      begin
+        //Write page title
+        sData := StringReplace(sData, '%title%', RemoveExt(ExtractFileName(lzFile)),
+          [rfIgnoreCase, rfReplaceAll]);
+        //Write to file
+        AssignFile(tf, lzFile);
+        ReWrite(tf);
+        Write(tf, sData);
+        CloseFile(tf);
+      end;
+
+      sData := '';
+      FreeAndNil(iData);
+      FreeAndNil(HtmlData);
+      FreeAndNil(sBookMarks);
+      FreeAndNil(frm);
     end;
-
-    sData := Trim(iData.Text);
-    sData := StringReplace(sData, '%BOOKMARK_DATA%', HtmlData.Text,
-      [rfIgnoreCase, rfReplaceAll]);
-
-    //Save the data
-    lzFile := GetDlgSaveName('Export', 'Html Files(*.html)|*.html|All Files(*.*)|*.*',
-      'bookmarks', 'html');
-    if lzFile <> '' then
-    begin
-      //Write to file
-      AssignFile(tf, lzFile);
-      ReWrite(tf);
-      Write(tf, sData);
-      CloseFile(tf);
-    end;
-
-    sData := '';
-    FreeAndNil(iData);
-    FreeAndNil(HtmlData);
-    FreeAndNil(sBookMarks);
   end;
+end;
+
+procedure TfrmLinks.BrowserConfig_Click(Sender: TObject);
+var
+  frm: TfrmBrowsers;
+begin
+  frm := TfrmBrowsers.Create(self);
+  frm.ShowModal;
+  //Cear up
+  FreeAndNil(frm);
 end;
 
 procedure TfrmLinks.LoadBrowsers;
@@ -431,17 +514,25 @@ var
   mi: TMenuItem;
   sSelection: string;
   ini: TIniFile;
-  X: integer;
+  X, bCount: integer;
 begin
 
-  ini := TIniFile.Create(AppPath + 'browsers.ini');
-  Browsers := TStringList.Create;
-  //Read all ini selections
-  ini.ReadSections(Browsers);
+  mnuOpenLink.Clear;
 
-  for X := 0 to Browsers.Count - 1 do
+  mi := TMenuItem.Create(mnuOpenLink);
+  mi.Caption := 'Config';
+  mi.OnClick := @BrowserConfig_Click;
+  mnuOpenLink.Add(mi);
+  mi := TMenuItem.Create(mnuOpenLink);
+  mi.Caption := '-';
+  mnuOpenLink.Add(mi);
+
+  ini := TIniFile.Create(AppPath + 'browsers.ini');
+  bCount := ini.ReadInteger('browsers', 'count', 0);
+
+  for X := 1 to bCount do
   begin
-    sSelection := Browsers[X];
+    sSelection := 'Browser' + IntToStr(X);
     mi := TMenuItem.Create(mnuOpenLink);
     mi.Caption := ini.ReadString(sSelection, 'Name', 'Untitled');
     mi.Tag := X;
@@ -455,23 +546,30 @@ end;
 procedure TfrmLinks.Browser_Click(Sender: TObject);
 var
   mi: TMenuItem;
+begin
+  mi := TMenuItem(Sender);
+  OpenInBrowser(mi.Tag);
+end;
+
+procedure TfrmLinks.OpenInBrowser(Index: integer);
+var
   exec, sSelection: string;
   ini: TIniFile;
   p: TProcess;
-  Id: integer;
+  id: integer;
 begin
-  mi := TMenuItem(Sender);
-  ini := TIniFile.Create(AppPath + 'browsers.ini');
+
   p := TProcess.Create(self);
   //Get ini selection
-  sSelection := Browsers[mi.Tag];
+  sSelection := 'Browser' + IntToStr(Index);
 
+  ini := TIniFile.Create(AppPath + 'browsers.ini');
   //Get broswer execute filename
   exec := ini.ReadString(sSelection, 'Path', '');
 
   if not FileExistsUTF8(exec) then
   begin
-    MessageDlg(Text, 'Can Not Find Filename:' + sLineBreak + exec,
+    MessageDlg(Text, 'Can Not Find Filename:' + sLineBreak + sLineBreak + exec,
       mtWarning, [mbOK], 0);
     Exit;
   end;
@@ -488,7 +586,6 @@ begin
     lblViews.Caption := IntToStr(GetLinkViews(Id));
   end;
   FreeAndNil(p);
-  FreeAndNil(ini);
 end;
 
 function TfrmLinks.GetProfileName: string;
@@ -617,9 +714,14 @@ begin
     if pak.UnPak(lzFile, BasePath) then
     begin
       MessageDlg(Text, 'The restore process was complete.', mtInformation, [mbOK], 0);
-      //CatLinkID := -1;
       LoadCats;
-      LstLinks.Clear;
+
+      if lstCats.Count > 0 then
+      begin
+        lstCats.ItemIndex := 0;
+        LoadLinks;
+      end;
+
     end
     else
     begin
@@ -631,6 +733,7 @@ end;
 procedure TfrmLinks.BackupLinks;
 var
   pak: TBagFile;
+  fExt: string;
   sr: TSearchRec;
   SrcFile, lzFile, sBackupName: string;
 begin
@@ -639,11 +742,17 @@ begin
   //Create backup name
   sBackupName := FormatDateTime('DDMMYYMMHHMMSS', Now);
 
-  if FindFirst(BasePath + '*.cat', faAnyFile, sr) = 0 then
+  if FindFirst(BasePath + '*.*', faAnyFile, sr) = 0 then
   begin
     repeat
-      SrcFile := BasePath + sr.Name;
-      pak.AddFile(SrcFile);
+      fExt := LowerCase(ExtractFileExt(sr.Name));
+
+      if (fExt = '.cat') or (fExt = '.ini') then
+      begin
+        SrcFile := BasePath + sr.Name;
+        pak.AddFile(SrcFile);
+      end;
+
     until FindNext(sr) <> 0;
   end;
 
@@ -737,7 +846,7 @@ begin
   FreeAndNil(sBookMarks);
 end;
 
-function TfrmLinks.GetLinkVotes(Index : Integer) : Integer;
+function TfrmLinks.GetLinkVotes(Index: integer): integer;
 var
   ini: TIniFile;
   sBookMarks: TStringList;
@@ -749,6 +858,24 @@ begin
     sBookMarks := TStringList.Create;
     ini.ReadSections(sBookMarks);
     Result := ini.ReadInteger(sBookMarks[Index], 'VOTES', 0);
+  end;
+
+  FreeAndNil(ini);
+  FreeAndNil(sBookMarks);
+end;
+
+function TfrmLinks.GetLinkIcon(Index: integer): integer;
+var
+  ini: TIniFile;
+  sBookMarks: TStringList;
+begin
+
+  if FileExistsUTF8(SelectedCatName) then
+  begin
+    ini := TIniFile.Create(SelectedCatName);
+    sBookMarks := TStringList.Create;
+    ini.ReadSections(sBookMarks);
+    Result := ini.ReadInteger(sBookMarks[Index], 'ICON', 0);
   end;
 
   FreeAndNil(ini);
@@ -774,7 +901,6 @@ begin
 
   FreeAndNil(ini);
   FreeAndNil(sBookMarks);
-
 end;
 
 procedure TfrmLinks.LoadLinks;
@@ -811,7 +937,7 @@ begin
   MessageDlg(Text, S, mtInformation, [mbOK], 0);
 end;
 
-procedure TfrmLinks.AddLinkInfo(lName, lAddress, lDesc: string);
+procedure TfrmLinks.AddLinkInfo(lName, lAddress, lDesc: string; nIcon: integer);
 var
   ini: TIniFile;
 begin
@@ -819,17 +945,26 @@ begin
   if FileExistsUTF8(SelectedCatName) then
   begin
     ini := TIniFile.Create(SelectedCatName);
-    ini.WriteString(lName, 'URL', lAddress);
-    ini.WriteString(lName, 'INFO', lDesc);
-    ini.WriteInteger(lName, 'VIEWS', 0);
-    ini.WriteInteger(lName,'VOTES',0);
+    //Check if bookmark is allready here.
+    if ini.SectionExists(lName) then
+    begin
+      MessageDlg(Text, BookmarkExsists, mtWarning, [mbOK], 0);
+    end
+    else
+    begin
+      ini.WriteString(lName, 'URL', lAddress);
+      ini.WriteString(lName, 'INFO', lDesc);
+      ini.WriteInteger(lName, 'VIEWS', 0);
+      ini.WriteInteger(lName, 'VOTES', 0);
+      ini.WriteInteger(lName, 'ICON', nIcon);
+    end;
+    //Clear up
+    FreeAndNil(ini);
   end;
-
-  FreeAndNil(ini);
 end;
 
 procedure TfrmLinks.EditCatLink(oldName, NewName, lAddress, lDesc: string;
-  nViews,nVotes: integer);
+  nViews, nVotes, nIcon: integer);
 var
   ini: TIniFile;
 begin
@@ -842,11 +977,40 @@ begin
     ini.WriteString(NewName, 'URL', lAddress);
     ini.WriteString(NewName, 'INFO', lDesc);
     ini.WriteInteger(NewName, 'VIEWS', nViews);
-    ini.WriteInteger(NewName,'VOTES',nVotes);
+    ini.WriteInteger(NewName, 'VOTES', nVotes);
+    ini.WriteInteger(NewName, 'ICON', nIcon);
   end;
 
   FreeAndNil(ini);
 
+end;
+
+procedure TfrmLinks.DupCatLink(NewName, lAddress, lDesc: string;
+  nViews, nVotes, nIcon: integer);
+var
+  ini: TIniFile;
+begin
+
+  if FileExistsUTF8(SelectedCatName) then
+  begin
+    //First delete the old selection
+    ini := TIniFile.Create(SelectedCatName);
+
+    if ini.SectionExists(NewName) then
+    begin
+      MessageDlg(Text, BookmarkExsists, mtWarning, [mbOK], 0);
+    end
+    else
+    begin
+      ini.WriteString(NewName, 'URL', lAddress);
+      ini.WriteString(NewName, 'INFO', lDesc);
+      ini.WriteInteger(NewName, 'VIEWS', nViews);
+      ini.WriteInteger(NewName, 'VOTES', nVotes);
+      ini.WriteInteger(NewName, 'ICON', nIcon);
+    end;
+  end;
+
+  FreeAndNil(ini);
 end;
 
 procedure TfrmLinks.DeleteLink(sName: string);
@@ -864,7 +1028,7 @@ begin
 end;
 
 procedure TfrmLinks.MoveLinkToCat(MoveFromCat, MoveToCat: string;
-  sName, lDesc: string; nViews,nVotes: integer);
+  sName, lDesc: string; nViews, nVotes, nIcon: integer);
 var
   ini: TIniFile;
   sLink: string;
@@ -879,7 +1043,8 @@ begin
     ini.WriteString(sName, 'URL', sLink);
     ini.WriteString(sName, 'INFO', lDesc);
     ini.WriteInteger(sName, 'VIEWS', nViews);
-    ini.WriteInteger(sName,'VOTES',nVotes);
+    ini.WriteInteger(sName, 'VOTES', nVotes);
+    ini.WriteInteger(sName, 'ICON', nIcon);
   end;
 
   FreeAndNil(ini);
@@ -903,10 +1068,52 @@ begin
   end;
 end;
 
+procedure TfrmLinks.AddCatIcon(cName: string; nIcon: integer);
+var
+  ini: TIniFile;
+begin
+  ini := TIniFile.Create(BasePath + 'folders.ini');
+  ini.WriteInteger(cName, 'ICON', nIcon);
+  FreeAndNil(ini);
+end;
+
+procedure TfrmLinks.EditCatName(cOldName, cNewName: string; nIcon: integer);
+var
+  ini: TIniFile;
+begin
+  ini := TIniFile.Create(BasePath + 'folders.ini');
+  //Erase old selection.
+  ini.EraseSection(cOldName);
+  ini.WriteInteger(cNewName, 'ICON', nIcon);
+  FreeAndNil(ini);
+end;
+
+procedure TfrmLinks.DeleteCatIcon(cName: string);
+var
+  ini: TIniFile;
+begin
+  ini := TIniFile.Create(BasePath + 'folders.ini');
+  //Erase old selection.
+  ini.EraseSection(cName);
+  FreeAndNil(ini);
+end;
+
+function TfrmLinks.GetCatIcon(cName: string): integer;
+var
+  ini: TIniFile;
+  nIcon: integer;
+begin
+  ini := TIniFile.Create(BasePath + 'folders.ini');
+  nIcon := ini.ReadInteger(cName, 'ICON', 0);
+  FreeAndNil(ini);
+  Result := nIcon;
+end;
+
 procedure TfrmLinks.FormCreate(Sender: TObject);
 
 begin
-
+  InitListIcons;
+  KeyPressCancel := False;
   Tray1.Hint := Caption;
   Tray1.Icon := Application.Icon;
 
@@ -925,6 +1132,7 @@ begin
   LoadBrowsers;
   LoadCats;
   CountCatsAndBookmarks;
+  ShowHideVotes(False);
 end;
 
 procedure TfrmLinks.FormWindowStateChange(Sender: TObject);
@@ -943,7 +1151,7 @@ end;
 
 procedure TfrmLinks.lblUrlMouseEnter(Sender: TObject);
 begin
-  lblUrl.Font.Color := $00A0637D;
+  lblUrl.Font.Color := clRed;
 end;
 
 procedure TfrmLinks.lblUrlMouseLeave(Sender: TObject);
@@ -953,30 +1161,34 @@ end;
 
 procedure TfrmLinks.cmdCatAddClick(Sender: TObject);
 var
-  S: string;
-  isOk: boolean;
+  frm: TfrmCatAdd;
 begin
-  S := '';
-  isOk := InputQuery('New Category', 'Name:', S);
 
-  if (isOk) and (Trim(S) <> '') then
+  Tools.ButtonPress := 0;
+  frm := TfrmCatAdd.Create(self);
+  frm.Caption := 'New';
+  frm.cmdOK.Caption := 'Add';
+  frm.ShowModal;
+
+  if Tools.ButtonPress = 1 then
   begin
-    case AddCat(S) of
+    case AddCatName(Tools.CatName) of
       0:
       begin
         ErrorMsgCat(BadCatName);
       end;
       1:
       begin
-        ErrorMsgCat('The category name "' + S + '" already exists.');
+        ErrorMsgCat('The category name "' + Tools.CatName + '" already exists.');
       end;
       2:
       begin
         //Add to the listbox
-        lstCats.Items.Add(S);
-        //Select the last added item
+        lstCats.Items.Add(Tools.CatName);
+        //Add cat icon
+        AddCatIcon(Tools.CatName, Tools.CatIcon);
         //Check for selected link name
-        MoveToListIndex(S, lstCats);
+        MoveToListIndex(Tools.CatName, lstCats);
         lstCatsClick(Sender);
       end;
       else
@@ -1006,29 +1218,91 @@ begin
     begin
       //Delete the file.
       DeleteFileUTF8(SelectedCatName);
+      //Delete the cat icon
+      DeleteCatIcon(cName);
       //Remove from the list
       lstCats.Items.Delete(lstCats.ItemIndex);
       //Clear the links
       LstLinks.Clear;
       ClearBookmarInfo;
+      ShowHideVotes(False);
     end;
   end;
   CountCatsAndBookmarks;
 end;
 
+procedure TfrmLinks.cmdCatDupClick(Sender: TObject);
+var
+  Idx: integer;
+  sl: TStringList;
+  lzOldFile, lzNewFile, lzTempFile: string;
+begin
+  idx := lstCats.ItemIndex;
+
+  if idx <> -1 then
+  begin
+    //Get catname append _copy
+    lzOldFile := lstCats.Items[idx];
+    //New cat name
+    lzNewFile := lzOldFile + '_copy';
+    //Temp save data file.
+    lzTempFile := BasePath + lzNewFile + '.cat';
+    //Create string list
+    sl := TStringList.Create;
+    //Load the original cat data
+    sl.LoadFromFile(BasePath + lzOldFile + '.cat');
+
+    case AddCatName(lzNewFile) of
+      0:
+      begin
+        ErrorMsgCat(BadCatName);
+      end;
+      1:
+      begin
+        ErrorMsgCat('The category name "' + lzNewFile + '" already exists.');
+      end;
+      2:
+      begin
+        //Add to the listbox
+        lstCats.Items.Add(lzNewFile);
+        AddCatIcon(lzNewFile, GetCatIcon(lzOldFile));
+        //Copy the data from the old cat to the new cat
+        sl.SaveToFile(lzTempFile);
+        MoveToListIndex(lzNewFile, lstCats);
+        lstCatsClick(Sender);
+        //Destroy string list
+        FreeAndNil(sl);
+      end;
+      else
+      begin
+        Exit;
+      end;
+    end;
+    CountCatsAndBookmarks;
+  end;
+end;
+
 procedure TfrmLinks.cmdCatEditClick(Sender: TObject);
 var
   S, S1: string;
-  isOk: boolean;
+  frm: TfrmCatAdd;
 begin
   if lstCats.ItemIndex <> -1 then
   begin
     S := lstCats.Items[lstCats.ItemIndex];
     S1 := S;
 
-    isOk := InputQuery('Edit Category', 'Name:', S);
-    if (isOk) and (Trim(S) <> '') then
+    Tools.ButtonPress := 0;
+    frm := TfrmCatAdd.Create(self);
+    frm.lblCatName.Text := S1;
+    frm.cboIcons.ItemIndex := GetCatIcon(S1);
+    frm.Caption := 'Edit';
+    frm.cmdOK.Caption := 'Update';
+    frm.ShowModal;
+
+    if Tools.ButtonPress = 1 then
     begin
+      S := Tools.CatName;
       case EditCat(S1, S) of
         0:
         begin
@@ -1043,28 +1317,39 @@ begin
           MoveToListIndex(S, lstCats);
           lstCatsClick(Sender);
         end;
-        else
-        begin
-          Exit;
-        end;
       end;
+      EditCatName(S1, S, Tools.CatIcon);
+    end;
+    FreeAndNil(frm);
+  end;
+end;
+
+procedure TfrmLinks.cmdClearBookmarksClick(Sender: TObject);
+var
+  X: integer;
+  oName: string;
+begin
+  if (lstCats.ItemIndex <> -1) and (LstLinks.Count > 0) then
+  begin
+    if MessageDlg(Text, 'Are you sure you want to clear all the bookmarks?',
+      mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+    begin
+      for X := 0 to LstLinks.Count - 1 do
+      begin
+        //Get bookmark to delete
+        oName := LstLinks.Items[X];
+        DeleteLink(oName);
+      end;
+      ClearBookmarInfo;
+      ShowHideVotes(False);
+      CountCatsAndBookmarks;
+      LoadLinks;
     end;
   end;
 end;
 
 procedure TfrmLinks.cmdCopyUrlClick(Sender: TObject);
-var
-  ID: integer;
-
 begin
-  //Get link ID
-  ID := LstLinks.ItemIndex;
-
-  if (lstCats.ItemIndex <> -1) and (ID <> -1) then
-  begin
-    //Copy link url to clipboard.
-    Clipboard.AsText := GetLinkUrl(ID);
-  end;
 end;
 
 procedure TfrmLinks.cmdExportLinksClick(Sender: TObject);
@@ -1091,11 +1376,12 @@ begin
     frm.ShowModal;
     if ButtonPress = 1 then
     begin
-      AddLinkInfo(Tools.LinkName, Tools.LinkUrl, Tools.LinkDesc);
+      AddLinkInfo(Tools.LinkName, Tools.LinkUrl, Tools.LinkDesc, Tools.LinkIcon);
       //Reload links
       LoadLinks;
       MoveToListIndex(Tools.LinkName, LstLinks);
       LstLinksClick(Sender);
+      KeyPressCancel := True;
     end;
     FreeAndNil(frm);
   end;
@@ -1123,16 +1409,18 @@ begin
     frm.lblLinkName.Text := oName;
     frm.lblLinkAddress.Text := GetLinkUrl(oIdx);
     frm.lblDescription.Text := GetLinkDescription(oIdx);
+    frm.cboIcons.ItemIndex := GetLinkIcon(oIdx);
     frm.ShowModal;
     if ButtonPress = 1 then
     begin
       //Update catLinks.
       EditCatLink(oName, Tools.LinkName, Tools.LinkUrl,
-      Tools.LinkDesc, oViews,GetLinkVotes(oIdx));
+        Tools.LinkDesc, oViews, GetLinkVotes(oIdx), Tools.LinkIcon);
       //Reload links
       LoadLinks;
       MoveToListIndex(Tools.LinkName, LstLinks);
       LstLinksClick(Sender);
+      KeyPressCancel := True;
     end;
     FreeAndNil(frm);
   end;
@@ -1156,6 +1444,7 @@ begin
       //Delete the link
       DeleteLink(oName);
       ClearBookmarInfo;
+      ShowHideVotes(False);
       LoadLinks;
     end;
   end;
@@ -1185,7 +1474,8 @@ begin
       lzCatFile := BasePath + Tools.LinksMoveToCat + '.cat';
       //Do the move
       MoveLinkToCat(SelectedCatName, lzCatFile, oName,
-        GetLinkDescription(oId), GetLinkViews(oId),GetLinkVotes(oId));
+        GetLinkDescription(oId), GetLinkViews(oId),
+        GetLinkVotes(oId), GetLinkIcon(oId));
       //Delete the item from the list.
       LstLinks.Items.Delete(oId);
       ClearBookmarInfo;
@@ -1202,6 +1492,7 @@ end;
 procedure TfrmLinks.cmdRestoreClick(Sender: TObject);
 begin
   RestoreLinks;
+  ShowHideVotes(False);
   CountCatsAndBookmarks;
 end;
 
@@ -1252,8 +1543,35 @@ begin
       Writeln(tf, 'URL=' + cUrl);
       CloseFile(tf);
     end;
-
   end;
+end;
+
+procedure TfrmLinks.cmdUrlCpyClick(Sender: TObject);
+var
+  oName, NewName, oDesc, oLink: string;
+  oViews: integer;
+  oIdx: integer;
+begin
+
+  oIdx := LstLinks.ItemIndex;
+
+  if (lstCats.ItemIndex <> -1) and (oIdx <> -1) then
+  begin
+    oName := GetLinkName(oIdx);
+    oViews := GetLinkViews(oIdx);
+    oDesc := GetLinkDescription(oIdx);
+    oLink := GetLinkUrl(oIdx);
+    NewName := oName + '_copy';
+    //Dup catLinks.
+    DupCatLink(NewName, oLink, oDesc, oViews,
+      GetLinkVotes(oIdx), GetLinkIcon(oIdx));
+    //Reload links
+    LoadLinks;
+    //Move to last bookmark added.
+    MoveToListIndex(NewName, LstLinks);
+    LstLinksClick(Sender);
+  end;
+  CountCatsAndBookmarks;
 end;
 
 procedure TfrmLinks.cmdBackupClick(Sender: TObject);
@@ -1286,6 +1604,7 @@ begin
     LoadLinks;
     ClearBookmarInfo;
     CountCatsAndBookmarks;
+    ShowHideVotes(False);
   end;
 end;
 
@@ -1306,11 +1625,13 @@ begin
   //Draw the icons in the listbox
   lstCats.Canvas.FillRect(ARect);
   //Draw the icon on the listbox from the image list.
-  ImgIcons.Draw(lstCats.Canvas, ARect.Left + 4, ARect.Top + 4, 0);
+
+  frmIcons.LstFolders.Draw(lstCats.Canvas, ARect.Left + 4, ARect.Top + 4,
+    GetCatIcon(lstCats.Items.Strings[Index]));
   //Align text
   YPos := (ARect.Bottom - ARect.Top - lstCats.Canvas.TextHeight(Text)) div 2;
   //Write the list item text
-  lstCats.Canvas.TextOut(ARect.left + ImgIcons.Width + 8, ARect.Top + YPos,
+  lstCats.Canvas.TextOut(ARect.left + frmIcons.LstFolders.Width + 8, ARect.Top + YPos,
     lstCats.Items.Strings[index]);
 
 end;
@@ -1330,7 +1651,7 @@ end;
 procedure TfrmLinks.lstCatsMeasureItem(Control: TWinControl; Index: integer;
   var AHeight: integer);
 begin
-  AHeight := ImgIcons.Height + 8;
+  AHeight := frmIcons.LstFolders.Height + 8;
 end;
 
 procedure TfrmLinks.LstLinksClick(Sender: TObject);
@@ -1345,27 +1666,44 @@ begin
     txtDesc.Text := GetLinkDescription(oIdx);
     lblViews.Caption := IntToStr(GetLinkViews(oIdx));
     SetVotes(GetLinkVotes(oIdx));
+    ShowHideVotes(True);
   end;
 end;
 
 procedure TfrmLinks.LstLinksDblClick(Sender: TObject);
 var
   oIdx: integer;
+  ini: TIniFile;
+  bDefault: integer;
 begin
   oIdx := LstLinks.ItemIndex;
 
   if oIdx <> -1 then
   begin
-    if not OpenURL(GetLinkUrl(oIdx)) then
+
+    ini := TIniFile.Create(AppPath + 'browsers.ini');
+    //Get default borwser
+    bDefault := ini.ReadInteger('Browsers', 'default', 0);
+    FreeAndNil(ini);
+
+    if bDefault = 0 then
     begin
-      MessageDlg(Text, ErrorOpeningUrl, mtError,
-        [mbOK], 0);
+      if not OpenURL(GetLinkUrl(oIdx)) then
+      begin
+        MessageDlg(Text, ErrorOpeningUrl, mtError,
+          [mbOK], 0);
+      end
+      else
+      begin
+        UpdateLinkViews(oIdx);
+        lblViews.Caption := IntToStr(GetLinkViews(oIdx));
+      end;
     end
     else
     begin
-      UpdateLinkViews(oIdx);
-      lblViews.Caption := IntToStr(GetLinkViews(oIdx));
+      OpenInBrowser(bDefault);
     end;
+
   end;
 end;
 
@@ -1381,31 +1719,37 @@ begin
   end;
   LstLinks.Canvas.FillRect(ARect);
   //Draw the icon on the listbox from the image list.
-  ImgIcons.Draw(LstLinks.Canvas, ARect.Left + 4, ARect.Top + 4, 1);
+  frmIcons.ilstBookmarks.Draw(LstLinks.Canvas, ARect.Left + 4,
+    ARect.Top + 4, GetLinkIcon(Index));
   //Align text
   YPos := (ARect.Bottom - ARect.Top - LstLinks.Canvas.TextHeight(Text)) div 2;
   //Write the list item text
-  LstLinks.Canvas.TextOut(ARect.left + ImgIcons.Width + 8, ARect.Top + YPos,
+  LstLinks.Canvas.TextOut(ARect.left + frmIcons.ilstBookmarks.Width +
+    8, ARect.Top + YPos,
     LstLinks.Items.Strings[index]);
 
 end;
 
 procedure TfrmLinks.LstLinksKeyUp(Sender: TObject; var Key: word; Shift: TShiftState);
 begin
-  if Key = VK_DELETE then
+  if not KeyPressCancel then
   begin
-    cmdLinksDeleteClick(Sender);
+    if Key = VK_DELETE then
+    begin
+      cmdLinksDeleteClick(Sender);
+    end;
+    if Key = VK_RETURN then
+    begin
+      cmdOpenLinkClick(Sender);
+    end;
   end;
-  if Key = VK_RETURN then
-  begin
-    cmdOpenLinkClick(Sender);
-  end;
+  KeyPressCancel := False;
 end;
 
 procedure TfrmLinks.LstLinksMeasureItem(Control: TWinControl;
   Index: integer; var AHeight: integer);
 begin
-  AHeight := ImgIcons.Height + 8;
+  AHeight := frmIcons.lstBookmarks.Height + 8;
 end;
 
 procedure TfrmLinks.mnuCatDeleteClick(Sender: TObject);
@@ -1507,9 +1851,14 @@ begin
     FreeAndNil(sData);
 end;
 
+procedure TfrmLinks.mnuClearBookmarksClick(Sender: TObject);
+begin
+  cmdClearBookmarksClick(Sender);
+end;
+
 procedure TfrmLinks.mnuCopyUrlClick(Sender: TObject);
 begin
-  cmdCopyUrlClick(Sender);
+  cmdUrlCpyClick(Sender);
 end;
 
 procedure TfrmLinks.cmdExitClick(Sender: TObject);
@@ -1547,6 +1896,11 @@ begin
   cmdLinkAddClick(Sender);
 end;
 
+procedure TfrmLinks.mnuMakeCopyClick(Sender: TObject);
+begin
+  cmdCatDupClick(Sender);
+end;
+
 procedure TfrmLinks.mnuNewCatClick(Sender: TObject);
 begin
   cmdCatAddClick(Sender);
@@ -1572,9 +1926,19 @@ begin
   cmdExitClick(Sender);
 end;
 
-procedure TfrmLinks.shpVoteChangeBounds(Sender: TObject);
+procedure TfrmLinks.pCarCanvasPaint(Sender: TObject);
 begin
+  PaintBar(pCarCanvas);
+end;
 
+procedure TfrmLinks.pBookmarksCanvasPaint(Sender: TObject);
+begin
+  PaintBar(pBookmarksCanvas);
+end;
+
+procedure TfrmLinks.pBookmarkInfoCanvasPaint(Sender: TObject);
+begin
+  PaintBar(pBookmarkInfoCanvas);
 end;
 
 procedure TfrmLinks.shpVoteMouseDown(Sender: TObject; Button: TMouseButton;
@@ -1582,8 +1946,8 @@ procedure TfrmLinks.shpVoteMouseDown(Sender: TObject; Button: TMouseButton;
 var
   shp: TShape;
   oIdx: integer;
-  ini : TIniFile;
-  cName : String;
+  ini: TIniFile;
+  cName: string;
 begin
   oIdx := LstLinks.ItemIndex;
 
@@ -1596,7 +1960,7 @@ begin
     if FileExistsUTF8(SelectedCatName) then
     begin
       ini := TIniFile.Create(SelectedCatName);
-      ini.WriteInteger(cName,'VOTES',shp.Tag);
+      ini.WriteInteger(cName, 'VOTES', shp.Tag);
     end;
   end;
 end;

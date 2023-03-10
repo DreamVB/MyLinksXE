@@ -1,0 +1,221 @@
+object frmBrowsers: TfrmBrowsers
+  Left = 756
+  Height = 584
+  Top = 189
+  Width = 643
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
+  Caption = 'Config Browsers'
+  ClientHeight = 584
+  ClientWidth = 643
+  DesignTimePPI = 144
+  OnCreate = FormCreate
+  Position = poDesktopCenter
+  LCLVersion = '2.2.4.0'
+  object lblTitle: TLabel
+    Left = 34
+    Height = 25
+    Top = 25
+    Width = 142
+    Caption = 'Internet Explorer'
+    Font.CharSet = ANSI_CHARSET
+    Font.Name = 'Segoe UI Semibold'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object txtFileEd1: TFileNameEdit
+    Left = 32
+    Height = 33
+    Top = 55
+    Width = 592
+    Filter = 'Program Files|*.exe|Linux Executable|*.elf|All Files|*.*'
+    FilterIndex = 0
+    HideDirectories = False
+    ButtonHint = 'Browse'
+    ButtonWidth = 34
+    NumGlyphs = 1
+    Flat = True
+    MaxLength = 0
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 0
+  end
+  object lblTitle1: TLabel
+    Left = 36
+    Height = 25
+    Top = 108
+    Width = 126
+    Caption = 'Microsoft Edge'
+    Font.CharSet = ANSI_CHARSET
+    Font.Name = 'Segoe UI Semibold'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object txtFileEd2: TFileNameEdit
+    Left = 34
+    Height = 33
+    Top = 138
+    Width = 592
+    Filter = 'Program Files|*.exe|Linux Executable|*.elf|All Files|*.*'
+    FilterIndex = 0
+    HideDirectories = False
+    ButtonHint = 'Browse'
+    ButtonWidth = 34
+    NumGlyphs = 1
+    Flat = True
+    MaxLength = 0
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 1
+  end
+  object lblTitle2: TLabel
+    Left = 36
+    Height = 25
+    Top = 196
+    Width = 122
+    Caption = 'Mozilla Firefox'
+    Font.CharSet = ANSI_CHARSET
+    Font.Name = 'Segoe UI Semibold'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object txtFileEd3: TFileNameEdit
+    Left = 34
+    Height = 33
+    Top = 226
+    Width = 592
+    Filter = 'Program Files|*.exe|Linux Executable|*.elf|All Files|*.*'
+    FilterIndex = 0
+    HideDirectories = False
+    ButtonHint = 'Browse'
+    ButtonWidth = 34
+    NumGlyphs = 1
+    Flat = True
+    MaxLength = 0
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 2
+  end
+  object lblTitle3: TLabel
+    Left = 36
+    Height = 25
+    Top = 284
+    Width = 131
+    Caption = 'Google Chrome'
+    Font.CharSet = ANSI_CHARSET
+    Font.Name = 'Segoe UI Semibold'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object txtFileEd4: TFileNameEdit
+    Left = 34
+    Height = 33
+    Top = 314
+    Width = 592
+    Filter = 'Program Files|*.exe|Linux Executable|*.elf|All Files|*.*'
+    FilterIndex = 0
+    HideDirectories = False
+    ButtonHint = 'Browse'
+    ButtonWidth = 34
+    NumGlyphs = 1
+    Flat = True
+    MaxLength = 0
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 3
+  end
+  object lblTitle4: TLabel
+    Left = 36
+    Height = 25
+    Top = 364
+    Width = 167
+    Caption = 'Opera Web Browser'
+    Font.CharSet = ANSI_CHARSET
+    Font.Name = 'Segoe UI Semibold'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object txtFileEd5: TFileNameEdit
+    Left = 34
+    Height = 33
+    Top = 394
+    Width = 592
+    Filter = 'Program Files|*.exe|Linux Executable|*.elf|All Files|*.*'
+    FilterIndex = 0
+    HideDirectories = False
+    ButtonHint = 'Browse'
+    ButtonWidth = 34
+    NumGlyphs = 1
+    Flat = True
+    MaxLength = 0
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 4
+  end
+  object cmdOK: TButton
+    Left = 32
+    Height = 38
+    Top = 520
+    Width = 113
+    Caption = 'OK'
+    OnClick = cmdOKClick
+    TabOrder = 6
+  end
+  object cmdClose: TButton
+    Left = 158
+    Height = 38
+    Top = 520
+    Width = 113
+    Caption = 'Close'
+    OnClick = cmdCloseClick
+    TabOrder = 7
+  end
+  object cboDefault: TComboBox
+    Left = 32
+    Height = 33
+    Top = 472
+    Width = 550
+    ItemHeight = 25
+    ItemIndex = 0
+    Items.Strings = (
+      'System Default'
+      'Internet Explorer'
+      'Microsoft Edge'
+      'Mozilla Firefox'
+      'Google Chrome'
+      'Opera Web Browser'
+    )
+    Style = csDropDownList
+    TabOrder = 5
+    Text = 'System Default'
+  end
+  object Label1: TLabel
+    Left = 34
+    Height = 25
+    Top = 440
+    Width = 230
+    Caption = 'Select your default browser'
+    Font.CharSet = ANSI_CHARSET
+    Font.Name = 'Segoe UI Semibold'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+end

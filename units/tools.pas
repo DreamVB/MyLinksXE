@@ -5,13 +5,15 @@ unit Tools;
 interface
 
 uses
-  Classes, SysUtils, ComCtrls, LCLIntf, LazFileUtils;
+  Classes, SysUtils, ComCtrls, LCLIntf, LazFileUtils, Graphics, listimages, Forms;
 
 function FixPath(S: string): string;
 function RemoveExt(S: string): string;
 function VaildFileName(S: string): boolean;
-function AddCat(TheName: string): integer;
+function AddCatName(TheName: string): integer;
 function EditCat(OldName, NewName: string): integer;
+function ColorToHtml(c: TColor): string;
+procedure InitListIcons;
 
 var
   AppPath: string;
@@ -26,11 +28,36 @@ var
   LinkName: string;
   LinkUrl: string;
   LinkDesc: string;
+  LinkIcon: integer;
+  //Cat icons
+  CatIcon: integer;
+  CatName: string;
   //Linkshare
   LinkShareUrl: string;
   LinkShareSrc: string;
+  //Temp form to hold image lists for icons
+  frmIcons: TfrmTemp;
+  //Html export page properties
+  HtmlPageTitle: string;
+  HtmlPageBkColor: string;
+  HtmlPageHeaderColor: string;
+  HtmlPageCatTextColor: string;
+  HtmlPageBookmarkDescription: string;
+  HtmlPageLinkColor: string;
+  HtmlPageLinkHoverColor: string;
 
 implementation
+
+procedure InitListIcons;
+begin
+  frmIcons := TfrmTemp.Create(nil);
+end;
+
+function ColorToHtml(c: TColor): string;
+begin
+  Result := '#' + IntToHex(GetRValue(c), 2) + IntToHex(GetGValue(c), 2) +
+    IntToHex(GetBValue(c), 2);
+end;
 
 function VaildFileName(S: string): boolean;
 var
@@ -77,7 +104,7 @@ begin
   end;
 end;
 
-function AddCat(TheName: string): integer;
+function AddCatName(TheName: string): integer;
 var
   tf: TextFile;
 begin

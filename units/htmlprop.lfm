@@ -1,0 +1,224 @@
+object frmHtml: TfrmHtml
+  Left = 874
+  Height = 457
+  Top = 263
+  Width = 697
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
+  Caption = 'Webpage Properties'
+  ClientHeight = 457
+  ClientWidth = 697
+  DesignTimePPI = 144
+  OnCreate = FormCreate
+  Position = poMainFormCenter
+  LCLVersion = '2.2.4.0'
+  object pPage: TPanel
+    Left = 293
+    Height = 390
+    Top = 30
+    Width = 387
+    BevelOuter = bvLowered
+    ClientHeight = 390
+    ClientWidth = 387
+    Color = clWhite
+    ParentColor = False
+    TabOrder = 0
+    object lblBookmarkHeader: TLabel
+      Left = 64
+      Height = 54
+      Top = 24
+      Width = 260
+      Caption = 'My Bookmarks'
+      Font.CharSet = ANSI_CHARSET
+      Font.Height = -40
+      Font.Pitch = fpVariable
+      Font.Quality = fqDraft
+      ParentColor = False
+      ParentFont = False
+    end
+    object lblPageCat: TLabel
+      Left = 24
+      Height = 32
+      Top = 104
+      Width = 199
+      Caption = 'Category Heading'
+      Font.CharSet = ANSI_CHARSET
+      Font.Height = -24
+      Font.Name = 'Segoe UI Semibold'
+      Font.Pitch = fpVariable
+      Font.Quality = fqDraft
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
+    object lblPageBookmarkDesc: TLabel
+      Left = 24
+      Height = 57
+      Top = 176
+      Width = 349
+      AutoSize = False
+      Caption = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed interdum'
+      Font.Color = 4802889
+      ParentColor = False
+      ParentFont = False
+      WordWrap = True
+    end
+    object lblHyperlink: TLabel
+      Cursor = crHandPoint
+      Left = 24
+      Height = 25
+      Top = 144
+      Width = 161
+      Caption = 'Bookmark Hyperlink'
+      Font.Color = 16744448
+      ParentColor = False
+      ParentFont = False
+      OnMouseEnter = lblHyperlinkMouseEnter
+      OnMouseLeave = lblHyperlinkMouseLeave
+    end
+  end
+  object txtHeaderText: TLabeledEdit
+    Left = 24
+    Height = 33
+    Top = 51
+    Width = 256
+    EditLabel.Height = 25
+    EditLabel.Width = 256
+    EditLabel.Caption = 'Page Heading Text'
+    EditLabel.ParentColor = False
+    TabOrder = 1
+    Text = 'My Bookmarks'
+    OnChange = txtHeaderTextChange
+  end
+  object lblBackcolor: TStaticText
+    Left = 24
+    Height = 26
+    Top = 104
+    Width = 136
+    AutoSize = True
+    Caption = 'Page back colour'
+    TabOrder = 2
+  end
+  object cmdPageColor: TColorButton
+    Left = 217
+    Height = 38
+    Top = 96
+    Width = 57
+    BorderWidth = 2
+    ButtonColorSize = 16
+    ButtonColor = clWhite
+    OnColorChanged = cmdPageColorColorChanged
+  end
+  object lblHeadingcolor: TStaticText
+    Left = 24
+    Height = 26
+    Top = 152
+    Width = 112
+    AutoSize = True
+    Caption = 'Heading color'
+    TabOrder = 3
+  end
+  object cmdHeaderColor: TColorButton
+    Left = 217
+    Height = 38
+    Top = 144
+    Width = 57
+    BorderWidth = 2
+    ButtonColorSize = 16
+    ButtonColor = clBlack
+    OnColorChanged = cmdHeaderColorColorChanged
+  end
+  object lblCatColor: TStaticText
+    Left = 24
+    Height = 26
+    Top = 200
+    Width = 144
+    AutoSize = True
+    Caption = 'Category Heading'
+    TabOrder = 4
+  end
+  object cmdCatColor: TColorButton
+    Left = 217
+    Height = 38
+    Top = 192
+    Width = 57
+    BorderWidth = 2
+    ButtonColorSize = 16
+    ButtonColor = clBlack
+    OnColorChanged = cmdCatColorColorChanged
+  end
+  object lblDescriptionColor: TStaticText
+    Left = 24
+    Height = 26
+    Top = 352
+    Width = 176
+    AutoSize = True
+    Caption = 'Bookmark Description'
+    TabOrder = 5
+  end
+  object cmdBookmarkDescColor: TColorButton
+    Left = 217
+    Height = 38
+    Top = 344
+    Width = 57
+    BorderWidth = 2
+    ButtonColorSize = 16
+    ButtonColor = 4802889
+    OnColorChanged = cmdBookmarkDescColorColorChanged
+  end
+  object cmdExport: TButton
+    Left = 16
+    Height = 38
+    Top = 400
+    Width = 113
+    Caption = 'Export'
+    OnClick = cmdExportClick
+    TabOrder = 6
+  end
+  object cmdClose: TButton
+    Left = 136
+    Height = 38
+    Top = 400
+    Width = 88
+    Caption = 'Close'
+    OnClick = cmdCloseClick
+    TabOrder = 7
+  end
+  object lblBookmarkLinkColor: TStaticText
+    Left = 24
+    Height = 26
+    Top = 248
+    Width = 165
+    AutoSize = True
+    Caption = 'Bookmark Link Color'
+    TabOrder = 8
+  end
+  object cmdLinkColor: TColorButton
+    Left = 217
+    Height = 38
+    Top = 240
+    Width = 57
+    BorderWidth = 2
+    ButtonColorSize = 16
+    ButtonColor = 16744448
+    OnColorChanged = cmdLinkColorColorChanged
+  end
+  object lblBookmarkLinkColor1: TStaticText
+    Left = 24
+    Height = 26
+    Top = 296
+    Width = 170
+    AutoSize = True
+    Caption = 'Bookmark Link Hover'
+    TabOrder = 9
+  end
+  object cmdLinkColorHover: TColorButton
+    Left = 217
+    Height = 38
+    Top = 288
+    Width = 57
+    BorderWidth = 2
+    ButtonColorSize = 16
+    ButtonColor = 16744576
+  end
+end

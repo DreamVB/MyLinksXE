@@ -26,9 +26,9 @@ object frmAbout: TfrmAbout
     ParentFont = False
   end
   object lblInfo: TLabel
-    Left = 128
+    Left = 88
     Height = 28
-    Top = 90
+    Top = 104
     Width = 374
     Caption = 'Free and Opensource Bookmarks Manager.'
     Font.CharSet = ANSI_CHARSET
@@ -66,11 +66,11 @@ object frmAbout: TfrmAbout
   end
   object lblWebsite: TLabel
     Cursor = crHandPoint
-    Left = 200
+    Left = 176
     Height = 18
-    Top = 136
-    Width = 107
-    Caption = 'Visit website'
+    Top = 152
+    Width = 146
+    Caption = 'Visit Project Page'
     Font.CharSet = ANSI_CHARSET
     Font.Color = clBlue
     Font.Height = -16
@@ -252,5 +252,18 @@ object frmAbout: TfrmAbout
       AC3C13CCF0517EA7F63A0F51CEE53F7CAC8227BEFF5BE59F30E48144D035F4D4
       0000000049454E44AE426082
     }
+  end
+  object lblUpdate: TLabel
+    Left = 360
+    Height = 25
+    Top = 43
+    Width = 73
+    Caption = 'Update 2'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clRed
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
   end
 end
